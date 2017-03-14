@@ -1,0 +1,12 @@
+use t1;
+
+create table employee(
+name string, 
+skill string,
+rank int,
+city string)
+row format delimited 
+fields terminated by ','
+stored as textfile;
+
+load data local inpath '/home/acadgild/emp_details.txt' into table employee;

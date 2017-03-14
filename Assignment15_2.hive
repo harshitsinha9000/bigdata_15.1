@@ -1,0 +1,46 @@
+---------------------------------
+"this is intermediate table  'here we keep date as string ,we need to perfomr format correction'
+
+create table oly_table_int			
+(
+athlete string,
+age int,
+country string,
+year int,
+closing string,
+sport string,
+gold int,
+silver int,
+bronze int,
+total int
+)
+row format delimited 
+fields terminated by ','
+stored as textfile;
+
+
+load data local inpath '/home/acadgild/olympix_data.csv' into table oly_table_int;
+
+--------------------------------------------------------
+
+"this is final table table  'here we keep date as string ,we need to perfomr format correction'
+
+create table oly_table_final
+(
+athlete string,
+age int,
+country string,
+year int,
+closing date,
+sport string,
+gold int,
+silver int,
+bronze int,
+total int
+)
+row format delimited 
+fields terminated by ','
+stored as textfile
+as 
+select athlete,age,country,year,from_unixtime(unix_timestamp( closing , 'mm/dd/yyyy'), 'yyyymmdd' ),sport,gold,silver,bronze,total from oly_table_int;
+
